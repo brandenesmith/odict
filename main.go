@@ -14,8 +14,8 @@ func main() {
 		fmt.Printf("Error: You must provide the word whose definition you wish to retrieve.")
 		os.Exit(1)
 	}
-
-	url := fmt.Sprintf("https://od-api.oxforddictionaries.com/api/v1/entries/en/%s", os.Args[1])
+	word := os.Args[1]
+	url := fmt.Sprintf("https://od-api.oxforddictionaries.com/api/v1/entries/en/%s", word)
 
 	// Create the request.
 	client := &http.Client{}
@@ -54,9 +54,16 @@ func main() {
 
 ===================================================
 
+Word:
+	%s
+
 Definition:
 	%s
 `
 
-	fmt.Printf(str, dictResp.Results[0].LexicalEntries[0].Entries[0].Senses[0].Definitions[0])
+	fmt.Printf(
+		str,
+		word,
+		dictResp.Results[0].LexicalEntries[0].Entries[0].Senses[0].Definitions[0],
+	)
 }
