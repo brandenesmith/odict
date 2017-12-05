@@ -1,11 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
-	"encoding/json"
 )
 
 func main() {
@@ -14,10 +14,10 @@ func main() {
 		fmt.Printf("Error: You must provide the word whose definition you wish to retrieve.\n")
 		os.Exit(1)
 	}
+
 	word := os.Args[1]
 	url := fmt.Sprintf("https://od-api.oxforddictionaries.com/api/v1/entries/en/%s", word)
 
-	// Create the request.
 	client := &http.Client{}
 	request, err := http.NewRequest(
 		http.MethodGet,
@@ -25,22 +25,21 @@ func main() {
 		nil,
 	)
 
-	// Add headers for api id and api key.
 	request.Header.Add("Content-Type", "application/json")
 	request.Header.Add("app_id", os.Getenv("ODICTAPIID"))
 	request.Header.Add("app_key", os.Getenv("ODICTAPIKEY"))
 
-	// Make the request.
 	resp, err := client.Do(request)
 	defer resp.Body.Close()
 
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
+
 	code := resp.StatusCode
 	bytes, err := ioutil.ReadAll(resp.Body)
-	dictResp := &DictResponse{}
 
+	dictResp := &DictResponse{}
 	json.Unmarshal(bytes, dictResp)
 
 	header := `
