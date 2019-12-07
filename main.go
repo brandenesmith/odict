@@ -16,7 +16,7 @@ func main() {
 	}
 
 	word := os.Args[1]
-	url := fmt.Sprintf("https://od-api.oxforddictionaries.com/api/v1/entries/en/%s", word)
+	url := fmt.Sprintf("https://od-api.oxforddictionaries.com/api/v2/entries/en/%s", word)
 
 	client := &http.Client{}
 	request, err := http.NewRequest(
@@ -30,11 +30,11 @@ func main() {
 	request.Header.Add("app_key", os.Getenv("ODICTAPIKEY"))
 
 	resp, err := client.Do(request)
-	defer resp.Body.Close()
 
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
+	defer resp.Body.Close()
 
 	code := resp.StatusCode
 	bytes, err := ioutil.ReadAll(resp.Body)

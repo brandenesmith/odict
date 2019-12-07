@@ -7,7 +7,7 @@ type DictResponse struct {
 
 // DictResult is a query result from the api.
 type DictResult struct {
-	Id             string         `json:"id"`
+	ID             string         `json:"id"`
 	Language       string         `json:"language"`
 	LexicalEntries []LexicalEntry `json:"lexicalEntries"`
 }
@@ -35,13 +35,8 @@ type GrammaticalFeature struct {
 
 // Sense is the slice of definitions, examples and other definitions.
 type Sense struct {
-	Definitions []string  `json:"definitions"`
-	Example     []Example `json:"examples"`
-	Domains     []string  `json:"domains"`
-	Subsenses   []Sense   `json:"subsenses"`
-}
-
-// Example is a na example usage of the word.
-type Example struct {
-	Text string `json:"text"`
+	Definitions []string `json:"definitions"`
+	Example     []string `json:"examples"`
+	Domains     []string `json:"domains"`
+	Subsenses   []Sense  `json:"subsenses"`
 }
